@@ -1,0 +1,46 @@
+import { RiZoomInLine, RiZoomOutLine } from 'react-icons/ri';
+import StickyNote from '../StickyNote';
+import TextObject from '../TextObject';
+import ImageObject from '../ImageObject';
+import ContextToolbar from '../ContextToolbar';
+import './Canvas.css';
+
+export default function Canvas() {
+  const scale = 1.0;
+  const offset = { x: 0, y: 0 };
+  const showToolbar = false;
+
+  const gridSize = 20 * scale;
+  const gridStyle = {
+    backgroundSize: `${gridSize}px ${gridSize}px`,
+    backgroundPosition: `${offset.x}px ${offset.y}px`,
+  };
+
+  const contentStyle = {
+    transform: `translate(${offset.x}px, ${offset.y}px) scale(${scale})`,
+  };
+
+  return (
+    <div className="canvas-container">
+      <div className="canvas-grid" style={gridStyle} />
+      <div className="canvas-content" style={contentStyle}>
+        <StickyNote />
+        <TextObject />
+        <ImageObject />
+        {showToolbar && <ContextToolbar />}
+      </div>
+
+      <div className="zoom-control">
+        <button className="zoom-control__button" title="Zoom Out">
+          <RiZoomOutLine />
+        </button>
+        <span className="zoom-control__percentage" title="Current Zoom">
+          {Math.round(scale * 100)}%
+        </span>
+        <button className="zoom-control__button" title="Zoom In">
+          <RiZoomInLine />
+        </button>
+      </div>
+    </div>
+  );
+}

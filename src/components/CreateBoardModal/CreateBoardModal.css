@@ -1,0 +1,11 @@
+.create-board-field {
+  margin-bottom: var(--space-2);
+}
+
+.create-board-label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-gray-700);
+}

@@ -1,0 +1,96 @@
+.ui-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  border: var(--border-width) solid transparent;
+  position: relative;
+  overflow: hidden;
+  line-height: var(--leading-normal);
+}
+
+.ui-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.ui-button:active {
+  transform: scale(0.97);
+}
+
+/* Primary */
+.ui-button--primary {
+  background-color: var(--color-primary-500);
+  color: white;
+  padding: var(--space-2) var(--space-4);
+  box-shadow: var(--shadow-sm);
+}
+.ui-button--primary:hover:not(:disabled) {
+  background-color: var(--color-primary-600);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+.ui-button--primary:active:not(:disabled) {
+  background-color: var(--color-primary-700);
+  transform: translateY(0) scale(0.97);
+}
+
+/* Secondary */
+.ui-button--secondary {
+  background-color: white;
+  border-color: var(--color-gray-300);
+  color: var(--color-gray-700);
+  padding: var(--space-2) var(--space-4);
+  box-shadow: var(--shadow-sm);
+}
+.ui-button--secondary:hover:not(:disabled) {
+  background-color: var(--color-gray-50);
+  border-color: var(--color-gray-400);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+.ui-button--secondary:active:not(:disabled) {
+  transform: translateY(0) scale(0.97);
+}
+
+/* Danger */
+.ui-button--danger {
+  background-color: var(--color-error);
+  color: white;
+  padding: var(--space-2) var(--space-4);
+  box-shadow: var(--shadow-sm);
+}
+.ui-button--danger:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+.ui-button--danger:active:not(:disabled) {
+  transform: translateY(0) scale(0.97);
+}
+
+/* Icon */
+.ui-button--icon {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background-color: transparent;
+  color: var(--color-gray-600);
+  transition: background-color var(--transition-fast),
+    color var(--transition-fast), transform var(--transition-fast);
+}
+.ui-button--icon:hover:not(:disabled) {
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-800);
+  transform: scale(1.05);
+}
+.ui-button--icon:active:not(:disabled) {
+  background-color: var(--color-gray-200);
+  transform: scale(0.95);
+}

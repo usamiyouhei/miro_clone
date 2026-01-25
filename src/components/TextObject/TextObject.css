@@ -1,0 +1,43 @@
+.text-object {
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 8px;
+  background-color: transparent;
+  min-height: 40px;
+  pointer-events: auto;
+}
+
+.text-object--selected {
+  cursor: move;
+  border: 1px solid #2196f3;
+}
+
+.text-object--default {
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.text-object__edit-container {
+  cursor: text;
+  border: 1px solid #2196f3;
+  z-index: 100;
+}
+
+.text-object__textarea {
+  width: 100%;
+  height: auto;
+  field-sizing: content;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  overflow: hidden;
+}
+
+.text-object__content-text {
+  white-space: pre-wrap;
+  word-break: break-word;
+  pointer-events: none;
+}
