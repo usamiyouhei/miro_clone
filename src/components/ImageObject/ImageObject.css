@@ -1,0 +1,23 @@
+.image-object-container {
+  max-width: 100%;
+}
+
+.image-object-container--selected {
+  cursor: move;
+  border: 1px solid #2196f3;
+  box-shadow: 0 0 0 1px #2196f3;
+}
+
+.image-object-container--default {
+  cursor: pointer;
+  border: none;
+  box-shadow: none;
+}
+
+.image-object-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
