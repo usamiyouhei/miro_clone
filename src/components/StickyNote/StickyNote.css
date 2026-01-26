@@ -1,0 +1,53 @@
+.sticky-note {
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  font-family: var(--font-family);
+  color: #1f2937;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  word-break: break-word;
+  touch-action: none;
+  transition: box-shadow var(--transition-normal),
+    transform var(--transition-normal);
+}
+
+.sticky-note--editing {
+  user-select: text;
+  cursor: text;
+}
+
+.sticky-note--draggable {
+  user-select: none;
+  cursor: grab;
+}
+
+.sticky-note--selected {
+  z-index: 10;
+  transform: scale(1.02);
+  box-shadow: 0 0 0 2px var(--color-primary-500), var(--shadow-xl);
+}
+
+.sticky-note--default {
+  box-shadow: var(--shadow-sticky);
+  transform: scale(1);
+  z-index: 1;
+}
+
+.sticky-note__textarea {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  resize: none;
+  outline: none;
+  text-align: center;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  overflow: hidden;
+}

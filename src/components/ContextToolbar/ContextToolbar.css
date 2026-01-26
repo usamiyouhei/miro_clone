@@ -1,0 +1,61 @@
+.context-toolbar {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  z-index: 1000;
+  gap: 8px;
+  transform: translateX(
+    -50%
+  ); /* Center horizontally relative to object center */
+}
+
+.context-toolbar__colors {
+  display: flex;
+  gap: 4px;
+}
+
+.context-toolbar__color-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.context-toolbar__color-btn:hover {
+  transform: scale(1.1);
+}
+
+.context-toolbar__color-btn--active {
+  border: 2px solid #3b82f6; /* Blue-500 */
+}
+
+.context-toolbar__divider {
+  width: 1px;
+  height: 24px;
+  background-color: #e5e7eb; /* Gray-200 */
+}
+
+.context-toolbar__delete-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  border-radius: 4px;
+  color: #ef4444; /* Red-500 */
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.context-toolbar__delete-btn:hover {
+  background-color: #fef2f2; /* Red-50 */
+}
