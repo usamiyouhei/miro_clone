@@ -1,5 +1,14 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Signin from "./pages/Signin";
+
 function App() {
-  return <div>hello</div>;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/signin" element={<Signin />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
