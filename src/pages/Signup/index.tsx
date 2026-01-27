@@ -1,10 +1,34 @@
-import { Link } from 'react-router-dom';
-import Card from '../../components/ui/Card';
-import Input from '../../components/ui/Input';
-import Button from '../../components/ui/Button';
-import './Signup.css';
+import { Link } from "react-router-dom";
+import Card from "../../components/ui/Card";
+import Input from "../../components/ui/Input";
+import Button from "../../components/ui/Button";
+import "./Signup.css";
+import { useState } from "react";
+import { authRepository } from "../../modules/auth/auth.repository";
 
 export default function Signup() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const signup = async () => {
+    setIsLoading(true);
+    try {
+      const { user, token } = await authRepository.signup(
+        name,
+        email,
+        password,
+      );
+      console.log(user, token);
+    } catch (error) {
+      console.error(error);
+      alert("登録に失敗しました");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="signup-page">
       <Card className="signup-card">
@@ -16,6 +40,8 @@ export default function Signup() {
             type="text"
             label="ユーザー名"
             placeholder="山田太郎"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
 
           <Input
@@ -23,6 +49,8 @@ export default function Signup() {
             type="email"
             label="メールアドレス"
             placeholder="example@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
 
           <Input
@@ -30,6 +58,8 @@ export default function Signup() {
             type="password"
             label="パスワード"
             placeholder="8文字以上"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
 
           <Button type="button" className="signup-submit-button">
