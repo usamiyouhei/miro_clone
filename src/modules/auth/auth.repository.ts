@@ -1,5 +1,5 @@
 import api from "../../lib/api";
-import type { User } from "../users/user.entity";
+import { User } from "../users/user.entity";
 
 export const authRepository = {
   async signup(
@@ -13,6 +13,6 @@ export const authRepository = {
       password,
     });
     const { user, token } = result.data;
-    return { user, token };
+    return { user: new User(user), token };
   },
 };
