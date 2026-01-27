@@ -1,7 +1,12 @@
 import api from "../../lib/api";
+import type { User } from "../users/user.entity";
 
 export const authRepository = {
-  async signup(name: string, email: string, password: string) {
+  async signup(
+    name: string,
+    email: string,
+    password: string,
+  ): Promise<{ user: User; token: string }> {
     const result = await api.post("/auth/signup", {
       name,
       email,
