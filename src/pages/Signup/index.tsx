@@ -62,7 +62,12 @@ export default function Signup() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <Button type="button" className="signup-submit-button">
+          <Button
+            type="button"
+            className="signup-submit-button"
+            onClick={signup}
+            disabled={!name || !email || !password}
+          >
             アカウント作成
           </Button>
         </div>
