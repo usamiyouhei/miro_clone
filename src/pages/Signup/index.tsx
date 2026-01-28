@@ -67,6 +67,7 @@ export default function Signup() {
             className="signup-submit-button"
             onClick={signup}
             disabled={!name || !email || !password}
+            isLoading={isLoading}
           >
             アカウント作成
           </Button>
@@ -74,7 +75,7 @@ export default function Signup() {
 
         <div className="signup-footer">
           既にアカウントをお持ちの方は
-          <Link to="" className="signup-link">
+          <Link to="/signin" className="signup-link">
             ログイン
           </Link>
         </div>

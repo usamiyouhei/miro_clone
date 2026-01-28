@@ -1,10 +1,29 @@
-import { Link } from 'react-router-dom';
-import Card from '../../components/ui/Card';
-import Input from '../../components/ui/Input';
-import Button from '../../components/ui/Button';
-import './Signin.css';
+import { Link } from "react-router-dom";
+import Card from "../../components/ui/Card";
+import Input from "../../components/ui/Input";
+import Button from "../../components/ui/Button";
+import "./Signin.css";
+import { useState } from "react";
+import { authRepository } from "../../modules/auth/auth.repository";
 
 export default function Signin() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const signin = async () => {
+    setIsLoading(true);
+    try {
+      const { user, token } = await authRepository.signin(email, password);
+      console.log(user, token);
+    } catch (error) {
+      console.error(error);
+      alert("ログインに失敗しました");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="signin-page">
       <Card className="signin-card">
@@ -16,6 +35,8 @@ export default function Signin() {
             type="email"
             label="メールアドレス"
             placeholder="example@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
 
           <Input
@@ -23,16 +44,24 @@ export default function Signin() {
             type="password"
             label="パスワード"
             placeholder="パスワード"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
 
-          <Button type="button" className="signin-submit-button">
+          <Button
+            type="button"
+            className="signin-submit-button"
+            onClick={signin}
+            disabled={!email || !password}
+            isLoading={isLoading}
+          >
             ログイン
           </Button>
         </div>
 
         <div className="signin-footer">
           アカウントをお持ちでない方は
-          <Link to="" className="signin-link">
+          <Link to="/signup" className="signin-link">
             新規登録
           </Link>
         </div>
