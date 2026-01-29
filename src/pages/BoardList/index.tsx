@@ -1,14 +1,20 @@
-import { Link } from 'react-router-dom';
-import { RiDashboardLine, RiAddLine, RiDeleteBinLine } from 'react-icons/ri';
-import CreateBoardModal from '../../components/CreateBoardModal';
-import Header from '../../components/Header';
-import './BoardList.css';
+import { Link, Navigate } from "react-router-dom";
+import { RiDashboardLine, RiAddLine, RiDeleteBinLine } from "react-icons/ri";
+import CreateBoardModal from "../../components/CreateBoardModal";
+import Header from "../../components/Header";
+import "./BoardList.css";
+import { useAtomValue } from "jotai";
+import { currentUserAtom } from "../../modules/auth/current-user.state";
 
 export default function BoardList() {
+  const currentUser = useAtomValue(currentUserAtom);
+
   const boards = [
-    { id: '1', name: 'Design Sprint', updatedAt: new Date().toISOString() },
-    { id: '2', name: 'Kanban Board', updatedAt: new Date().toISOString() },
+    { id: "1", name: "Design Sprint", updatedAt: new Date().toISOString() },
+    { id: "2", name: "Kanban Board", updatedAt: new Date().toISOString() },
   ];
+
+  if (!currentUser) return <Navigate to="/signin" />;
 
   return (
     <div className="board-list-page">
