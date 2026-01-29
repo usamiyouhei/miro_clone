@@ -24,7 +24,8 @@ export default function Signup() {
         password,
       );
       setCurrentUser(user);
-      console.log(user, token);
+      localStorage.setItem("token", token);
+      // console.log(user, token);
     } catch (error) {
       console.error(error);
       alert("登録に失敗しました");
