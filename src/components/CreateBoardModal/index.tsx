@@ -1,15 +1,28 @@
-import Button from '../ui/Button';
-import Modal from '../ui/Modal';
-import './CreateBoardModal.css';
+import Button from "../ui/Button";
+import Modal from "../ui/Modal";
+import "./CreateBoardModal.css";
 
-export default function CreateBoardModal() {
-  const isOpen = false;
-  const name = 'New Board';
+interface CreateBoardModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: (name: string) => Promise<void>;
+}
+
+export default function CreateBoardModal({
+  isOpen,
+  onClose,
+  onSubmit,
+}: CreateBoardModalProps) {
+  const name = "New Board";
   const submitting = false;
 
   const footer = (
     <>
-      <button className="btn btn-secondary" disabled={submitting}>
+      <button
+        className="btn btn-secondary"
+        disabled={submitting}
+        onClick={onClose}
+      >
         キャンセル
       </button>
       <Button className="btn btn-primary" disabled={submitting || !name.trim()}>
@@ -21,7 +34,7 @@ export default function CreateBoardModal() {
   return (
     <Modal
       isOpen={isOpen}
-      onClose={() => {}}
+      onClose={onClose}
       title="新しいボードを作成"
       footer={footer}
     >
