@@ -6,6 +6,7 @@ import "./BoardList.css";
 import { useAtomValue } from "jotai";
 import { currentUserAtom } from "../../modules/auth/current-user.state";
 import { useState } from "react";
+import { boardRepository } from "../../modules/boards/board.repository";
 
 export default function BoardList() {
   const currentUser = useAtomValue(currentUserAtom);
@@ -15,6 +16,11 @@ export default function BoardList() {
     { id: "2", name: "Kanban Board", updatedAt: new Date().toISOString() },
   ];
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const createBoard = async (name: string) => {
+    const newBoard = await boardRepository.create(name);
+    console.log(newBoard);
+  };
 
   if (!currentUser) return <Navigate to="/signin" />;
 
@@ -66,8 +72,8 @@ export default function BoardList() {
 
       <CreateBoardModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen}
-        onSubmit={async () => {}}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={createBoard}
       />
     </div>
   );

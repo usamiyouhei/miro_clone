@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Button from "../ui/Button";
 import Modal from "../ui/Modal";
 import "./CreateBoardModal.css";
@@ -13,8 +14,21 @@ export default function CreateBoardModal({
   onClose,
   onSubmit,
 }: CreateBoardModalProps) {
-  const name = "New Board";
-  const submitting = false;
+  const [name, setName] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async () => {
+    setSubmitting(true);
+    try {
+      await onSubmit(name);
+      onClose();
+    } catch (error) {
+      console.error(error);
+      alert("ボードの作成に失敗しました");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   const footer = (
     <>
@@ -25,7 +39,12 @@ export default function CreateBoardModal({
       >
         キャンセル
       </button>
-      <Button className="btn btn-primary" disabled={submitting || !name.trim()}>
+      <Button
+        className="btn btn-primary"
+        disabled={submitting || !name.trim()}
+        isLoading={submitting}
+        onClick={handleSubmit}
+      >
         作成
       </Button>
     </>
@@ -47,6 +66,7 @@ export default function CreateBoardModal({
           defaultValue={name}
           autoFocus
           disabled={submitting}
+          onChange={(e) => setName(e.target.value)}
         />
       </div>
     </Modal>
