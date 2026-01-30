@@ -5,6 +5,7 @@ import Header from "../../components/Header";
 import "./BoardList.css";
 import { useAtomValue } from "jotai";
 import { currentUserAtom } from "../../modules/auth/current-user.state";
+import { useState } from "react";
 
 export default function BoardList() {
   const currentUser = useAtomValue(currentUserAtom);
@@ -13,6 +14,7 @@ export default function BoardList() {
     { id: "1", name: "Design Sprint", updatedAt: new Date().toISOString() },
     { id: "2", name: "Kanban Board", updatedAt: new Date().toISOString() },
   ];
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   if (!currentUser) return <Navigate to="/signin" />;
 
@@ -22,7 +24,10 @@ export default function BoardList() {
 
       <main className="board-list-main">
         <div className="action-bar">
-          <button className="btn btn-primary">
+          <button
+            className="btn btn-primary"
+            onClick={() => setIsModalOpen(true)}
+          >
             <RiAddLine className="add-icon" />
             新しいボードを作成
           </button>
@@ -59,7 +64,11 @@ export default function BoardList() {
         )}
       </main>
 
-      <CreateBoardModal />
+      <CreateBoardModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen}
+        onSubmit={async () => {}}
+      />
     </div>
   );
 }
