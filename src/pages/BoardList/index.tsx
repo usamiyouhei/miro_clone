@@ -5,17 +5,31 @@ import Header from "../../components/Header";
 import "./BoardList.css";
 import { useAtomValue } from "jotai";
 import { currentUserAtom } from "../../modules/auth/current-user.state";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { boardRepository } from "../../modules/boards/board.repository";
+import { Board } from "../../modules/boards/board.entity";
 
 export default function BoardList() {
   const currentUser = useAtomValue(currentUserAtom);
-
-  const boards = [
-    { id: "1", name: "Design Sprint", updatedAt: new Date().toISOString() },
-    { id: "2", name: "Kanban Board", updatedAt: new Date().toISOString() },
-  ];
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [boards, setBoards] = useState<Board[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    fetchBoards();
+  }, []);
+
+  const fetchBoards = async () => {
+    setIsLoading(true);
+    try {
+      const data = await boardRepository.getAll();
+      setBoards(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const createBoard = async (name: string) => {
     const newBoard = await boardRepository.create(name);
@@ -23,6 +37,7 @@ export default function BoardList() {
   };
 
   if (!currentUser) return <Navigate to="/signin" />;
+  if (isLoading) return <p>読み込み中...</p>;
 
   return (
     <div className="board-list-page">
