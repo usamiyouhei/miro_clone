@@ -10,4 +10,7 @@ export const boardRepository = {
     const result = await api.post("/boards", { name });
     return new Board(result.data);
   },
+  async delete(id: string): Promise<void> {
+    await api.delete(`/boards/${id}`);
+  },
 };
