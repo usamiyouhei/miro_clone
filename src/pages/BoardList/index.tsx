@@ -33,7 +33,23 @@ export default function BoardList() {
 
   const createBoard = async (name: string) => {
     const newBoard = await boardRepository.create(name);
-    console.log(newBoard);
+    setBoards([newBoard, ...boards]);
+    // console.log(newBoard);
+  };
+
+  const deleteBoard = async (e: React.MouseEvent, boardId: string) => {
+    e.preventDefault();
+    if (!window.confirm("このボードを削除してもよろしいでしょうか？")) {
+      return;
+    }
+
+    try {
+      await boardRepository.delete(boardId);
+      setBoards(boards.filter((board) => board.id !== boardId));
+    } catch (error) {
+      console.error(error);
+      alert("ボードの削除に失敗しました");
+    }
   };
 
   if (!currentUser) return <Navigate to="/signin" />;
@@ -65,8 +81,16 @@ export default function BoardList() {
         ) : (
           <div className="board-grid">
             {boards.map((board) => (
-              <Link key={board.id} className="board-card" to="">
-                <button className="board-delete-button" title="ボードを削除">
+              <Link
+                key={board.id}
+                className="board-card"
+                to={`/boards/${board.id}`}
+              >
+                <button
+                  className="board-delete-button"
+                  title="ボードを削除"
+                  onClick={(e) => deleteBoard(e, board.id)}
+                >
                   <RiDeleteBinLine />
                 </button>
                 <div className="board-thumbnail">
