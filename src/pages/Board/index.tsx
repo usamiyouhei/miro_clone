@@ -30,7 +30,7 @@ export default function Board() {
   if (!currentUser) return <Navigate to="/signin" />;
   return (
     <div className="board-page">
-      <Header />
+      <Header title={board?.name ?? ""} />
 
       <div className="board-page__content">
         <aside className="toolbar">

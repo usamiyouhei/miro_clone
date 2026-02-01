@@ -57,7 +57,7 @@ export default function BoardList() {
 
   return (
     <div className="board-list-page">
-      <Header />
+      <Header title="ボード一覧" />
 
       <main className="board-list-main">
         <div className="action-bar">
