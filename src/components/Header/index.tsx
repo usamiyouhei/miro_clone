@@ -1,10 +1,15 @@
-import { Link } from 'react-router-dom';
-import { RiUser3Line, RiLogoutBoxRLine } from 'react-icons/ri';
-import './Header.css';
+import { Link } from "react-router-dom";
+import { RiUser3Line, RiLogoutBoxRLine } from "react-icons/ri";
+import "./Header.css";
+import { useAtom } from "jotai";
+import { currentUserAtom } from "../../modules/auth/current-user.state";
 
-export default function Header() {
-  const title = 'Board Title';
-  const currentUser = { name: 'Demo User' };
+interface HeaderProps {
+  title: string;
+}
+
+export default function Header({ title }: HeaderProps) {
+  const [currentUser, setCurrentUser] = useAtom(currentUserAtom);
 
   return (
     <header className="common-header">
@@ -18,7 +23,7 @@ export default function Header() {
       <div className="common-header__right">
         <span className="common-header__user">
           <RiUser3Line />
-          {currentUser.name}
+          {currentUser!.name}
         </span>
         <button className="common-header__logout" title="ログアウト">
           <RiLogoutBoxRLine />
