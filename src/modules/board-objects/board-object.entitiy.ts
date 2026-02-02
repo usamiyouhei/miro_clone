@@ -10,6 +10,7 @@ export class BoardObject {
   height?: number;
   content?: string;
   createdAt!: string;
+  updatedAt!: string;
   color!: string;
 
   constructor(data: BoardObject) {
