@@ -14,7 +14,7 @@ export default function Header({ title }: HeaderProps) {
   return (
     <header className="common-header">
       <div className="common-header__left">
-        <Link to="" className="common-header__logo">
+        <Link to="/" className="common-header__logo">
           Miro Clone
         </Link>
         <div className="common-header__divider" />
