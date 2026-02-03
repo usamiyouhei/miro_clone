@@ -1,11 +1,16 @@
-import { RiZoomInLine, RiZoomOutLine } from 'react-icons/ri';
-import StickyNote from '../StickyNote';
-import TextObject from '../TextObject';
-import ImageObject from '../ImageObject';
-import ContextToolbar from '../ContextToolbar';
-import './Canvas.css';
+import { RiZoomInLine, RiZoomOutLine } from "react-icons/ri";
+import StickyNote from "../StickyNote";
+import TextObject from "../TextObject";
+import ImageObject from "../ImageObject";
+import ContextToolbar from "../ContextToolbar";
+import "./Canvas.css";
+import type { BoardObject } from "../../modules/board-objects/board-object.entitiy";
 
-export default function Canvas() {
+interface CanvasProps {
+  objects: BoardObject[];
+}
+
+export default function Canvas({ objects }: CanvasProps) {
   const scale = 1.0;
   const offset = { x: 0, y: 0 };
   const showToolbar = false;
@@ -24,9 +29,9 @@ export default function Canvas() {
     <div className="canvas-container">
       <div className="canvas-grid" style={gridStyle} />
       <div className="canvas-content" style={contentStyle}>
-        <StickyNote />
-        <TextObject />
-        <ImageObject />
+        {objects.map((object) => (
+          <StickyNote />
+        ))}
         {showToolbar && <ContextToolbar />}
       </div>
 
