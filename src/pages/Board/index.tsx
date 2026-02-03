@@ -84,7 +84,7 @@ export default function Board() {
         </aside>
 
         <main className="board-page__canvas-area">
-          <Canvas />
+          <Canvas objects={objects} />
         </main>
       </div>
     </div>
