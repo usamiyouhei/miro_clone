@@ -7,7 +7,7 @@ export const boardRepository = {
     return result.data.map((item: Board) => new Board(item));
   },
   async getBoard(id: string): Promise<Board> {
-    const result = await api.get(`boards/${id}`);
+    const result = await api.get(`/boards/${id}`);
     return new Board(result.data);
   },
   async create(name: string): Promise<Board> {

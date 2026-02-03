@@ -13,7 +13,7 @@ export interface CreateParams {
 
 export const boardObjectRepository = {
   async create(boardId: string, data: CreateParams): Promise<BoardObject> {
-    const result = await api.post(`/board-object/${boardId}`, data);
+    const result = await api.post(`/board-objects/${boardId}`, data);
     return new BoardObject(result.data);
   },
 };

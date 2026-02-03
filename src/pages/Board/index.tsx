@@ -8,6 +8,7 @@ import { Navigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Board as BoardEntity } from "../../modules/boards/board.entity";
 import { boardRepository } from "../../modules/boards/board.repository";
+import { boardObjectRepository } from "../../modules/board-objects/board-object.repository";
 
 export default function Board() {
   const currentUser = useAtomValue(currentUserAtom);
@@ -27,6 +28,24 @@ export default function Board() {
     }
   };
 
+  const createObject = async () => {
+    const x = 200 + (Math.random() - 0.5) * 50;
+    const y = 200 + (Math.random() - 0.5) * 50;
+
+    try {
+      const newObject = await boardObjectRepository.create(boardId!, {
+        x,
+        y,
+        type: "sticky",
+        content: "New Sticky Note",
+      });
+      console.log(newObject);
+    } catch (error) {
+      console.error(error);
+      alert("オブジェクトの作成に失敗しました");
+    }
+  };
+
   if (!currentUser) return <Navigate to="/signin" />;
   return (
     <div className="board-page">
@@ -35,7 +54,11 @@ export default function Board() {
       <div className="board-page__content">
         <aside className="toolbar">
           <div className="toolbar__group">
-            <button className="toolbar__button" title="Sticky Note">
+            <button
+              className="toolbar__button"
+              title="Sticky Note"
+              onClick={createObject}
+            >
               <RiStickyNoteFill className="toolbar__icon" />
             </button>
             <button className="toolbar__button" title="Text">
