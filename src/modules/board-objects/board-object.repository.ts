@@ -12,6 +12,10 @@ export interface CreateParams {
 }
 
 export const boardObjectRepository = {
+  async getAll(boardId: string): Promise<BoardObject[]> {
+    const result = await api.get(`/board-objects/${boardId}`);
+    return result.data.map((object: BoardObject) => new BoardObject(object));
+  },
   async create(boardId: string, data: CreateParams): Promise<BoardObject> {
     const result = await api.post(`/board-objects/${boardId}`, data);
     return new BoardObject(result.data);

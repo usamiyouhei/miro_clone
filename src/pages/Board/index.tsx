@@ -9,20 +9,32 @@ import { useEffect, useState } from "react";
 import { Board as BoardEntity } from "../../modules/boards/board.entity";
 import { boardRepository } from "../../modules/boards/board.repository";
 import { boardObjectRepository } from "../../modules/board-objects/board-object.repository";
+import type { BoardObject } from "../../modules/board-objects/board-object.entitiy";
 
 export default function Board() {
   const currentUser = useAtomValue(currentUserAtom);
   const { boardId } = useParams<{ boardId: string }>();
   const [board, setBoard] = useState<BoardEntity | null>(null);
+  const [objects, setObjects] = useState<BoardObject[]>([]);
 
   useEffect(() => {
     fetchBoard();
+    fetchObjects();
   }, []);
 
   const fetchBoard = async () => {
     try {
       const data = await boardRepository.getBoard(boardId!);
       setBoard(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchObjects = async () => {
+    try {
+      const data = await boardObjectRepository.getAll(boardId!);
+      setObjects(data);
     } catch (error) {
       console.error(error);
     }
