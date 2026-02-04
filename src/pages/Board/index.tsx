@@ -51,6 +51,7 @@ export default function Board() {
         type: "sticky",
         content: "New Sticky Note",
       });
+      setObjects([...objects, newObject]);
       console.log(newObject);
     } catch (error) {
       console.error(error);
