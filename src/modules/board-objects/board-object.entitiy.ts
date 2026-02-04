@@ -11,7 +11,7 @@ export class BoardObject {
   content?: string;
   createdAt!: string;
   updatedAt!: string;
-  color!: string;
+  color?: string;
 
   constructor(data: BoardObject) {
     Object.assign(this, data);

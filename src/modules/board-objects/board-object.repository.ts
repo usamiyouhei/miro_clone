@@ -20,4 +20,8 @@ export const boardObjectRepository = {
     const result = await api.post(`/board-objects/${boardId}`, data);
     return new BoardObject(result.data);
   },
+  async update(id: string, data: Partial<BoardObject>): Promise<BoardObject> {
+    const result = await api.patch(`/board-objects/${id}`, data);
+    return new BoardObject(result.data);
+  },
 };
