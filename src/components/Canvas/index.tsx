@@ -30,7 +30,7 @@ export default function Canvas({ objects }: CanvasProps) {
       <div className="canvas-grid" style={gridStyle} />
       <div className="canvas-content" style={contentStyle}>
         {objects.map((object) => (
-          <StickyNote />
+          <StickyNote key={object.id} object={object} />
         ))}
         {showToolbar && <ContextToolbar />}
       </div>
