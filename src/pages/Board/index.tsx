@@ -59,6 +59,15 @@ export default function Board() {
     }
   };
 
+  const updateObject = async (id: string, data: Partial<BoardObject>) => {
+    try {
+      const updatedObject = await boardObjectRepository.update(id, data);
+      setObjects(objects.map((obj) => (obj.id === id ? updatedObject : obj)));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   if (!currentUser) return <Navigate to="/signin" />;
   return (
     <div className="board-page">
@@ -85,7 +94,7 @@ export default function Board() {
         </aside>
 
         <main className="board-page__canvas-area">
-          <Canvas objects={objects} />
+          <Canvas objects={objects} onObjectUpdate={updateObject} />
         </main>
       </div>
     </div>
