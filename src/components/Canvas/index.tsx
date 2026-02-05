@@ -8,9 +8,10 @@ import type { BoardObject } from "../../modules/board-objects/board-object.entit
 
 interface CanvasProps {
   objects: BoardObject[];
+  onObjectUpdate: (id: string, data: Partial<BoardObject>) => void;
 }
 
-export default function Canvas({ objects }: CanvasProps) {
+export default function Canvas({ objects, onObjectUpdate }: CanvasProps) {
   const scale = 1.0;
   const offset = { x: 0, y: 0 };
   const showToolbar = false;
@@ -30,7 +31,11 @@ export default function Canvas({ objects }: CanvasProps) {
       <div className="canvas-grid" style={gridStyle} />
       <div className="canvas-content" style={contentStyle}>
         {objects.map((object) => (
-          <StickyNote key={object.id} object={object} />
+          <StickyNote
+            key={object.id}
+            object={object}
+            onUpdate={(data) => onObjectUpdate(object.id, data)}
+          />
         ))}
         {showToolbar && <ContextToolbar />}
       </div>

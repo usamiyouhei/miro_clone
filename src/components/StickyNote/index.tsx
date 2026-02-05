@@ -4,9 +4,10 @@ import "./StickyNote.css";
 
 interface StickyNoteProps {
   object: BoardObject;
+  onUpdate: (data: Partial<BoardObject>) => void;
 }
 
-export default function StickyNote({ object }: StickyNoteProps) {
+export default function StickyNote({ object, onUpdate }: StickyNoteProps) {
   const { x, y, width, height, content, color } = object;
 
   // const width = 200;
@@ -38,7 +39,12 @@ export default function StickyNote({ object }: StickyNoteProps) {
   // };
 
   return (
-    <DraggableObject x={x} y={y} className="board-object">
+    <DraggableObject
+      x={x}
+      y={y}
+      className="board-object"
+      onDragEnd={(x, y) => onUpdate({ x, y })}
+    >
       <div style={style} className={getContainerClassName()}>
         <div style={{ pointerEvents: "none" }}>{content}</div>
       </div>

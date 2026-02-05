@@ -3,6 +3,7 @@ import "./DraggableObject.css";
 interface DraggableObjectProps {
   x: number;
   y: number;
+  onDragEnd: (x: number, y: number) => void;
   children: React.ReactNode;
   style?: React.CSSProperties;
   className?: string;
@@ -11,6 +12,7 @@ interface DraggableObjectProps {
 export default function DraggableObject({
   x,
   y,
+  onDragEnd,
   children,
   style,
   className,
