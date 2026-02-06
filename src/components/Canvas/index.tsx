@@ -49,7 +49,14 @@ export default function Canvas({
             isSelected={object.id === selectedId}
           />
         ))}
-        {selectedObject && <ContextToolbar />}
+        {selectedObject && (
+          <ContextToolbar
+            object={selectedObject}
+            onColorChange={(color) =>
+              onObjectUpdate(selectedObject.id, { color })
+            }
+          />
+        )}
       </div>
 
       <div className="zoom-control">
