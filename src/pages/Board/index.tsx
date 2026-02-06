@@ -94,7 +94,13 @@ export default function Board() {
         </aside>
 
         <main className="board-page__canvas-area">
-          <Canvas objects={objects} onObjectUpdate={updateObject} />
+          <Canvas
+            objects={objects}
+            onObjectUpdate={updateObject}
+            selectedId={selectedId}
+            onObjectSelect={setSelectedId}
+            onBackgroundClick={() => setSelectedId(null)}
+          />
         </main>
       </div>
     </div>
