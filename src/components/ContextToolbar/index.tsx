@@ -13,11 +13,13 @@ const COLORS = [
 interface ContextToolbarProps {
   object: BoardObject;
   onColorChange: (color: string) => void;
+  onDelete: () => void;
 }
 
 export default function ContextToolbar({
   object,
   onColorChange,
+  onDelete,
 }: ContextToolbarProps) {
   const { x, y, color, width } = object;
   // const color = "#FEF3C7";
@@ -51,7 +53,11 @@ export default function ContextToolbar({
           <div className="context-toolbar__divider" />
         </>
       )}
-      <button className="context-toolbar__delete-btn" title="Delete">
+      <button
+        className="context-toolbar__delete-btn"
+        title="Delete"
+        onClick={onDelete}
+      >
         <RiDeleteBinLine />
       </button>
     </div>

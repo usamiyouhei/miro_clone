@@ -111,6 +111,7 @@ export default function Board() {
             selectedId={selectedId}
             onObjectSelect={setSelectedId}
             onBackgroundClick={() => setSelectedId(null)}
+            onObjectDelete={deleteObject}
           />
         </main>
       </div>

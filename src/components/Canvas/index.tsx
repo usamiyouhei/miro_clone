@@ -12,6 +12,7 @@ interface CanvasProps {
   selectedId: string | null;
   onObjectSelect: (id: string) => void;
   onBackgroundClick: () => void;
+  onObjectDelete: (id: string) => void;
 }
 
 export default function Canvas({
@@ -20,6 +21,7 @@ export default function Canvas({
   selectedId,
   onObjectSelect,
   onBackgroundClick,
+  onObjectDelete,
 }: CanvasProps) {
   const scale = 1.0;
   const offset = { x: 0, y: 0 };
@@ -55,6 +57,7 @@ export default function Canvas({
             onColorChange={(color) =>
               onObjectUpdate(selectedObject.id, { color })
             }
+            onDelete={() => onObjectDelete(selectedObject.id)}
           />
         )}
       </div>
