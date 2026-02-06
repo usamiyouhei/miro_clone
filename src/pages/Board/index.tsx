@@ -16,11 +16,7 @@ export default function Board() {
   const { boardId } = useParams<{ boardId: string }>();
   const [board, setBoard] = useState<BoardEntity | null>(null);
   const [objects, setObjects] = useState<BoardObject[]>([]);
-
-  useEffect(() => {
-    fetchBoard();
-    fetchObjects();
-  }, []);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const fetchBoard = async () => {
     try {
@@ -39,6 +35,10 @@ export default function Board() {
       console.error(error);
     }
   };
+  useEffect(() => {
+    fetchBoard();
+    fetchObjects();
+  }, []);
 
   const createObject = async () => {
     const x = 200 + (Math.random() - 0.5) * 50;

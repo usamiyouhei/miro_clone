@@ -9,12 +9,20 @@ import type { BoardObject } from "../../modules/board-objects/board-object.entit
 interface CanvasProps {
   objects: BoardObject[];
   onObjectUpdate: (id: string, data: Partial<BoardObject>) => void;
+  selectedId: string | null;
+  onObjectSelect: (id: string) => void;
+  onBackgroundClick: () => void;
 }
 
-export default function Canvas({ objects, onObjectUpdate }: CanvasProps) {
+export default function Canvas({
+  objects,
+  onObjectUpdate,
+  selectedId,
+  onObjectSelect,
+  onBackgroundClick,
+}: CanvasProps) {
   const scale = 1.0;
   const offset = { x: 0, y: 0 };
-  const showToolbar = false;
 
   const gridSize = 20 * scale;
   const gridStyle = {
@@ -26,8 +34,10 @@ export default function Canvas({ objects, onObjectUpdate }: CanvasProps) {
     transform: `translate(${offset.x}px, ${offset.y}px) scale(${scale})`,
   };
 
+  const selectedObject = objects.find((object) => object.id === selectedId);
+
   return (
-    <div className="canvas-container">
+    <div className="canvas-container" onPointerDown={onBackgroundClick}>
       <div className="canvas-grid" style={gridStyle} />
       <div className="canvas-content" style={contentStyle}>
         {objects.map((object) => (
@@ -35,9 +45,11 @@ export default function Canvas({ objects, onObjectUpdate }: CanvasProps) {
             key={object.id}
             object={object}
             onUpdate={(data) => onObjectUpdate(object.id, data)}
+            onSelect={() => onObjectSelect(object.id)}
+            isSelected={object.id === selectedId}
           />
         ))}
-        {showToolbar && <ContextToolbar />}
+        {selectedObject && <ContextToolbar />}
       </div>
 
       <div className="zoom-control">
