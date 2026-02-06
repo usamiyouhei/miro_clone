@@ -5,16 +5,17 @@ import "./StickyNote.css";
 interface StickyNoteProps {
   object: BoardObject;
   onUpdate: (data: Partial<BoardObject>) => void;
+  onSelect: () => void;
+  isSelected?: boolean;
 }
 
-export default function StickyNote({ object, onUpdate }: StickyNoteProps) {
+export default function StickyNote({
+  object,
+  onUpdate,
+  onSelect,
+  isSelected,
+}: StickyNoteProps) {
   const { x, y, width, height, content, color } = object;
-
-  // const width = 200;
-  // const height = 200;
-  // const color = "var(--sticky-yellow)";
-  // const content = "Sample Sticky Note";
-  const isSelected = false;
 
   const style: React.CSSProperties = {
     width: width || 200,
@@ -45,7 +46,7 @@ export default function StickyNote({ object, onUpdate }: StickyNoteProps) {
       className="board-object"
       onDragEnd={(x, y) => onUpdate({ x, y })}
     >
-      <div style={style} className={getContainerClassName()}>
+      <div style={style} className={getContainerClassName()} onClick={onSelect}>
         <div style={{ pointerEvents: "none" }}>{content}</div>
       </div>
     </DraggableObject>
