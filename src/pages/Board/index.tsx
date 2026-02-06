@@ -68,6 +68,17 @@ export default function Board() {
     }
   };
 
+  const deleteObject = async (id: string) => {
+    try {
+      await boardObjectRepository.delete(id);
+      setObjects(objects.filter((object) => object.id !== id));
+      setSelectedId(null);
+    } catch (error) {
+      console.error(error);
+      alert("オブジェクトの削除に失敗しました");
+    }
+  };
+
   if (!currentUser) return <Navigate to="/signin" />;
   return (
     <div className="board-page">

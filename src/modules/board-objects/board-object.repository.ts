@@ -24,4 +24,7 @@ export const boardObjectRepository = {
     const result = await api.patch(`/board-objects/${id}`, data);
     return new BoardObject(result.data);
   },
+  async delete(id: string): Promise<void> {
+    await api.delete(`/board-objects/${id}`);
+  },
 };
