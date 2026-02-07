@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { BoardObject } from "../../modules/board-objects/board-object.entitiy";
 import DraggableObject from "../DraggableObject";
 import "./StickyNote.css";
@@ -16,11 +17,19 @@ export default function StickyNote({
   isSelected,
 }: StickyNoteProps) {
   const { x, y, width, height, content, color } = object;
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingText, setEditingText] = useState(content || "");
 
   const style: React.CSSProperties = {
     width: width || 200,
     height: height || 200,
     backgroundColor: color || "var(--sticky-yellow)",
+  };
+
+  const handleDoubleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsEditing(true);
+    onSelect();
   };
 
   const getContainerClassName = () => {
@@ -46,8 +55,21 @@ export default function StickyNote({
       className="board-object"
       onDragEnd={(x, y) => onUpdate({ x, y })}
     >
-      <div style={style} className={getContainerClassName()} onClick={onSelect}>
-        <div style={{ pointerEvents: "none" }}>{content}</div>
+      <div
+        style={style}
+        className={getContainerClassName()}
+        onClick={onSelect}
+        onDoubleClick={handleDoubleClick}
+      >
+        {isEditing ? (
+          <textarea
+            value={editingText}
+            onChange={(e) => setEditingText(e.target.value)}
+            className="sticky-note__textarea"
+          />
+        ) : (
+          <div style={{ pointerEvents: "none" }}>{content}</div>
+        )}
       </div>
     </DraggableObject>
   );
