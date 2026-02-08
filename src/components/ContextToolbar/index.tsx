@@ -14,16 +14,16 @@ interface ContextToolbarProps {
   object: BoardObject;
   onColorChange: (color: string) => void;
   onDelete: () => void;
+  showColorPicker?: boolean;
 }
 
 export default function ContextToolbar({
   object,
   onColorChange,
   onDelete,
+  showColorPicker = true,
 }: ContextToolbarProps) {
   const { x, y, color, width } = object;
-  // const color = "#FEF3C7";
-  const showColorPicker = true;
 
   return (
     <div

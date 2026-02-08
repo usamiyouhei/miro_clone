@@ -1,34 +1,39 @@
-import DraggableObject from '../DraggableObject';
-import './TextObject.css';
+import type { BoardObject } from "../../modules/board-objects/board-object.entitiy";
+import DraggableObject from "../DraggableObject";
+import "./TextObject.css";
 
-export default function TextObject() {
-  const content = 'Sample Text Object';
-  const width = 200;
-  const isSelected = false;
+interface TextObjectProps {
+  object: BoardObject;
+  onUpdate: (data: Partial<BoardObject>) => void;
+  isSelected?: boolean;
+  onSelect: () => void;
+}
+
+export default function TextObject({
+  object,
+  onUpdate,
+  isSelected,
+  onSelect,
+}: TextObjectProps) {
+  const { x, y, width, content } = object;
 
   const style: React.CSSProperties = {
     width,
   };
 
   const getContainerClassName = () => {
-    let classes = 'text-object';
+    let classes = "text-object";
     if (isSelected) {
-      classes += ' text-object--selected';
+      classes += " text-object--selected";
     } else {
-      classes += ' text-object--default';
+      classes += " text-object--default";
     }
     return classes;
   };
 
-  const positionStyle: React.CSSProperties = {
-    position: 'absolute',
-    top: 150,
-    left: 400,
-  };
-
   return (
-    <DraggableObject style={positionStyle}>
-      <div style={style} className={getContainerClassName()}>
+    <DraggableObject x={x} y={y} onDragEnd={(x, y) => onUpdate({ x, y })}>
+      <div style={style} className={getContainerClassName()} onClick={onSelect}>
         <div className="text-object__content-text">{content}</div>
       </div>
     </DraggableObject>
