@@ -36,21 +36,38 @@ export default function Canvas({
     transform: `translate(${offset.x}px, ${offset.y}px) scale(${scale})`,
   };
 
+  const getObject = (object: BoardObject) => {
+    if (object.type === "sticky") {
+      return (
+        <StickyNote
+          key={object.id}
+          object={object}
+          onUpdate={(data) => onObjectUpdate(object.id, data)}
+          onSelect={() => onObjectSelect(object.id)}
+          isSelected={object.id === selectedId}
+        />
+      );
+    }
+    if (object.type === "text") {
+      return (
+        <TextObject
+          key={object.id}
+          object={object}
+          onUpdate={(data) => onObjectUpdate(object.id, data)}
+          onSelect={() => onObjectSelect(object.id)}
+          isSelected={object.id === selectedId}
+        />
+      );
+    }
+  };
+
   const selectedObject = objects.find((object) => object.id === selectedId);
 
   return (
     <div className="canvas-container" onPointerDown={onBackgroundClick}>
       <div className="canvas-grid" style={gridStyle} />
       <div className="canvas-content" style={contentStyle}>
-        {objects.map((object) => (
-          <StickyNote
-            key={object.id}
-            object={object}
-            onUpdate={(data) => onObjectUpdate(object.id, data)}
-            onSelect={() => onObjectSelect(object.id)}
-            isSelected={object.id === selectedId}
-          />
-        ))}
+        {objects.map((object) => getObject(object))}
         {selectedObject && (
           <ContextToolbar
             object={selectedObject}
@@ -58,6 +75,7 @@ export default function Canvas({
               onObjectUpdate(selectedObject.id, { color })
             }
             onDelete={() => onObjectDelete(selectedObject.id)}
+            showColorPicker={selectedObject.type === "sticky"}
           />
         )}
       </div>
