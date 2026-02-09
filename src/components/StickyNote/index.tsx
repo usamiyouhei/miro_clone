@@ -40,10 +40,10 @@ export default function StickyNote({
   };
 
   const handleBlur = () => {
-    setIsEditing(false);
     if (editingText !== content) {
       onUpdate({ content: editingText });
     }
+    setIsEditing(false);
   };
 
   const getContainerClassName = () => {
