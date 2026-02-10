@@ -27,4 +27,14 @@ export const boardObjectRepository = {
   async delete(id: string): Promise<void> {
     await api.delete(`/board-objects/${id}`);
   },
+  async uploadImage(file: File): Promise<{ url: string }> {
+    const formData = new FormData();
+    formData.append("file", file);
+    const result = await api.post("/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return result.data;
+  },
 };
