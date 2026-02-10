@@ -5,7 +5,7 @@ import "./Board.css";
 import { useAtomValue } from "jotai";
 import { currentUserAtom } from "../../modules/auth/current-user.state";
 import { Navigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Board as BoardEntity } from "../../modules/boards/board.entity";
 import { boardRepository } from "../../modules/boards/board.repository";
 import {
@@ -20,6 +20,7 @@ export default function Board() {
   const [board, setBoard] = useState<BoardEntity | null>(null);
   const [objects, setObjects] = useState<BoardObject[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const imageRef = useRef<HTMLInputElement>(null);
 
   const fetchBoard = async () => {
     try {
@@ -95,6 +96,29 @@ export default function Board() {
     }
   };
 
+  const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+
+    const file = e.target.files[0];
+
+    if (file.size > 5 * 1024 * 1024) {
+      alert("ファイルサイズが大きすぎます");
+      return;
+    }
+
+    try {
+      const result = await boardObjectRepository.uploadImage(file);
+      await createObject({
+        type: "image",
+        width: 300,
+        content: result.url,
+      });
+    } catch (error) {
+      console.log(error);
+      alert("画像のアップロードに失敗しました");
+    }
+  };
+
   if (!currentUser) return <Navigate to="/signin" />;
   return (
     <div className="board-page">
@@ -117,10 +141,20 @@ export default function Board() {
             >
               <RiText className="toolbar__icon" />
             </button>
-            <button className="toolbar__button" title="Image">
+            <button
+              className="toolbar__button"
+              title="Image"
+              onClick={() => imageRef.current?.click()}
+            >
               <RiImageFill className="toolbar__icon" />
             </button>
-            <input type="file" style={{ display: "none" }} accept="image/*" />
+            <input
+              type="file"
+              style={{ display: "none" }}
+              accept="image/*"
+              ref={imageRef}
+              onChange={uploadImage}
+            />
           </div>
         </aside>
 
