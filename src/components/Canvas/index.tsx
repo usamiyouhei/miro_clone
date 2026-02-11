@@ -59,6 +59,18 @@ export default function Canvas({
         />
       );
     }
+    if (object.type === "image") {
+      return (
+        <ImageObject
+          key={object.id}
+          object={object}
+          onUpdate={(data) => onObjectUpdate(object.id, data)}
+          onSelect={() => onObjectSelect(object.id)}
+          isSelected={object.id === selectedId}
+        />
+      );
+    }
+    return null;
   };
 
   const selectedObject = objects.find((object) => object.id === selectedId);

@@ -1,38 +1,48 @@
-import DraggableObject from '../DraggableObject';
-import './ImageObject.css';
+import type { BoardObject } from "../../modules/board-objects/board-object.entitiy";
+import DraggableObject from "../DraggableObject";
+import "./ImageObject.css";
 
-export default function ImageObject() {
-  const content = 'https://placehold.co/200x200';
-  const width = 200;
-  const height = 200;
-  const isSelected = false;
+interface BoardObjectProps {
+  object: BoardObject;
+  onUpdate: (data: Partial<BoardObject>) => void;
+  isSelected?: boolean;
+  onSelect: () => void;
+}
+
+export default function ImageObject({
+  object,
+  onUpdate,
+  isSelected,
+  onSelect,
+}: BoardObjectProps) {
+  const { x, y, content, width, height } = object;
 
   const style: React.CSSProperties = {
-    width,
-    height,
+    width: width ? width : "auto",
+    height: height ? height : "auto",
   };
 
   const containerClassName = `image-object-container ${
     isSelected
-      ? 'image-object-container--selected'
-      : 'image-object-container--default'
+      ? "image-object-container--selected"
+      : "image-object-container--default"
   }`;
 
-  const positionStyle: React.CSSProperties = {
-    position: 'absolute',
-    top: 300,
-    left: 200,
-  };
-
   return (
-    <DraggableObject style={positionStyle} className={containerClassName}>
-      <div style={style}>
+    <DraggableObject
+      x={x}
+      y={y}
+      onDragEnd={(x, y) => onUpdate({ x, y })}
+      style={style}
+      className={containerClassName}
+    >
+      <div onClick={onSelect}>
         <img
           src={content}
           alt="Uploaded object"
           draggable={false}
           className="image-object-img"
-          style={{ width: '100%', height: '100%' }}
+          style={{ width: "100%", height: "100%" }}
         />
       </div>
     </DraggableObject>
