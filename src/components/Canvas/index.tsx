@@ -13,6 +13,8 @@ interface CanvasProps {
   onObjectSelect: (id: string) => void;
   onBackgroundClick: () => void;
   onObjectDelete: (id: string) => void;
+  offset: { x: number; y: number };
+  onOffsetChange: (offset: { x: number; y: number }) => void;
 }
 
 export default function Canvas({
@@ -22,9 +24,19 @@ export default function Canvas({
   onObjectSelect,
   onBackgroundClick,
   onObjectDelete,
+  offset,
+  onOffsetChange,
 }: CanvasProps) {
   const scale = 1.0;
-  const offset = { x: 0, y: 0 };
+  const handleWheel = (e: React.WheelEvent) => {
+    const deltaX = e.deltaX;
+    const deltaY = e.deltaY;
+
+    onOffsetChange({
+      x: offset.x - deltaX,
+      y: offset.y - deltaY,
+    });
+  };
 
   const gridSize = 20 * scale;
   const gridStyle = {
@@ -76,7 +88,11 @@ export default function Canvas({
   const selectedObject = objects.find((object) => object.id === selectedId);
 
   return (
-    <div className="canvas-container" onPointerDown={onBackgroundClick}>
+    <div
+      className="canvas-container"
+      onPointerDown={onBackgroundClick}
+      onWheel={handleWheel}
+    >
       <div className="canvas-grid" style={gridStyle} />
       <div className="canvas-content" style={contentStyle}>
         {objects.map((object) => getObject(object))}

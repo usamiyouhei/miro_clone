@@ -21,6 +21,7 @@ export default function Board() {
   const [objects, setObjects] = useState<BoardObject[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const imageRef = useRef<HTMLInputElement>(null);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
 
   const fetchBoard = async () => {
     try {
@@ -166,6 +167,8 @@ export default function Board() {
             onObjectSelect={setSelectedId}
             onBackgroundClick={() => setSelectedId(null)}
             onObjectDelete={deleteObject}
+            offset={offset}
+            onOffsetChange={setOffset}
           />
         </main>
       </div>
