@@ -22,6 +22,7 @@ export default function Board() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const imageRef = useRef<HTMLInputElement>(null);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const canvasRef = useRef<HTMLDivElement>(null);
 
   const fetchBoard = async () => {
     try {
@@ -40,14 +41,31 @@ export default function Board() {
       console.error(error);
     }
   };
+
+  const getCenterPosition = () => {
+    const wrapper = canvasRef.current;
+    if (!wrapper) return { x: 0, y: 0 };
+
+    const { width, height } = wrapper.getBoundingClientRect();
+    const centerX = width / 2;
+    const centerY = height / 2;
+
+    return {
+      x: centerX - offset.x,
+      y: centerY - offset.y,
+    };
+  };
+
   useEffect(() => {
     fetchBoard();
     fetchObjects();
   }, []);
 
   const createObject = async (params: Omit<CreateParams, "x" | "y">) => {
-    const x = 200 + (Math.random() - 0.5) * 50;
-    const y = 200 + (Math.random() - 0.5) * 50;
+    const center = getCenterPosition();
+
+    const x = center.x + (Math.random() - 0.5) * 50;
+    const y = center.y + (Math.random() - 0.5) * 50;
 
     try {
       const newObject = await boardObjectRepository.create(boardId!, {
@@ -159,7 +177,7 @@ export default function Board() {
           </div>
         </aside>
 
-        <main className="board-page__canvas-area">
+        <main className="board-page__canvas-area" ref={canvasRef}>
           <Canvas
             objects={objects}
             onObjectUpdate={updateObject}
