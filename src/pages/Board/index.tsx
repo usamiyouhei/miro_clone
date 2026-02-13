@@ -62,6 +62,24 @@ export default function Board() {
     fetchObjects();
   }, []);
 
+  //   useEffect(() => {
+  //   const init = async () => {
+  //     if (!boardId) return;
+
+  //     try {
+  //       const boardData = await boardRepository.getBoard(boardId);
+  //       setBoard(boardData);
+
+  //       const objectData = await boardObjectRepository.getAll(boardId);
+  //       setObjects(objectData);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+
+  //   init();
+  // }, [boardId]);
+
   const createObject = async (params: Omit<CreateParams, "x" | "y">) => {
     const center = getCenterPosition();
 
