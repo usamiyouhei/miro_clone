@@ -11,6 +11,13 @@ interface HeaderProps {
 export default function Header({ title }: HeaderProps) {
   const [currentUser, setCurrentUser] = useAtom(currentUserAtom);
 
+  const logout = () => {
+    if (window.confirm("ログアウトしますか？")) {
+      localStorage.removeItem("token");
+      setCurrentUser(undefined);
+    }
+  };
+
   return (
     <header className="common-header">
       <div className="common-header__left">
@@ -25,7 +32,11 @@ export default function Header({ title }: HeaderProps) {
           <RiUser3Line />
           {currentUser!.name}
         </span>
-        <button className="common-header__logout" title="ログアウト">
+        <button
+          className="common-header__logout"
+          title="ログアウト"
+          onClick={logout}
+        >
           <RiLogoutBoxRLine />
         </button>
       </div>

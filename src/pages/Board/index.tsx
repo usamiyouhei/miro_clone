@@ -52,8 +52,8 @@ export default function Board() {
     const centerY = height / 2;
 
     return {
-      x: centerX - offset.x,
-      y: centerY - offset.y,
+      x: (centerX - offset.x) / scale,
+      y: (centerY - offset.y) / scale,
     };
   };
 
