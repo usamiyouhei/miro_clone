@@ -6,6 +6,10 @@ import ContextToolbar from "../ContextToolbar";
 import "./Canvas.css";
 import type { BoardObject } from "../../modules/board-objects/board-object.entitiy";
 
+const MIN_SCALE = 0.2;
+const MAX_SCALE = 2.0;
+const SCALE_STEP = 0.1;
+
 interface CanvasProps {
   objects: BoardObject[];
   onObjectUpdate: (id: string, data: Partial<BoardObject>) => void;
@@ -15,6 +19,8 @@ interface CanvasProps {
   onObjectDelete: (id: string) => void;
   offset: { x: number; y: number };
   onOffsetChange: (offset: { x: number; y: number }) => void;
+  scale: number;
+  onScaleChange: (scale: number) => void;
 }
 
 export default function Canvas({
@@ -26,8 +32,9 @@ export default function Canvas({
   onObjectDelete,
   offset,
   onOffsetChange,
+  scale,
+  onScaleChange,
 }: CanvasProps) {
-  const scale = 1.0;
   const handleWheel = (e: React.WheelEvent) => {
     const deltaX = e.deltaX;
     const deltaY = e.deltaY;
@@ -36,6 +43,16 @@ export default function Canvas({
       x: offset.x - deltaX,
       y: offset.y - deltaY,
     });
+  };
+
+  const zoomIn = () => {
+    if (scale >= MAX_SCALE) return;
+    onScaleChange(Math.round((scale + SCALE_STEP) * 10) / 10);
+  };
+
+  const zoomOut = () => {
+    if (scale <= MIN_SCALE) return;
+    onScaleChange(Math.round((scale - SCALE_STEP) * 10) / 10);
   };
 
   const gridSize = 20 * scale;
@@ -109,13 +126,21 @@ export default function Canvas({
       </div>
 
       <div className="zoom-control">
-        <button className="zoom-control__button" title="Zoom Out">
+        <button
+          className="zoom-control__button"
+          title="Zoom Out"
+          onClick={zoomOut}
+        >
           <RiZoomOutLine />
         </button>
         <span className="zoom-control__percentage" title="Current Zoom">
           {Math.round(scale * 100)}%
         </span>
-        <button className="zoom-control__button" title="Zoom In">
+        <button
+          className="zoom-control__button"
+          title="Zoom In"
+          onClick={zoomIn}
+        >
           <RiZoomInLine />
         </button>
       </div>

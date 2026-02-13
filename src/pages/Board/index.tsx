@@ -23,6 +23,7 @@ export default function Board() {
   const imageRef = useRef<HTMLInputElement>(null);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const canvasRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1.0);
 
   const fetchBoard = async () => {
     try {
@@ -187,6 +188,8 @@ export default function Board() {
             onObjectDelete={deleteObject}
             offset={offset}
             onOffsetChange={setOffset}
+            scale={scale}
+            onScaleChange={setScale}
           />
         </main>
       </div>
